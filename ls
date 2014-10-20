@@ -1,4 +1,4 @@
 #!/bin/bash
 
-ls -d ~/*.git/
+find . -maxdepth 1 -type d -name *.git
 
