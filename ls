@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env ruby
 
-find . -maxdepth 1 -type d -name *.git
+Dir[File.join(ENV["HOME"], "*.git")].each do |file|
+  puts File.basename(file)
+end
 
