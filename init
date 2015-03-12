@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+if ARGV.length == 0
+  puts "usage: init <name>"
+  puts
+  puts "initializes bare git repository"
+  exit
+end
+
+name = ARGV.first.strip
+
+name = "#{name}.git" unless name =~ /\.git$/
+
+path = File.join(ENV["HOME"], name)
+
+puts `git init --bare #{path}`
+
