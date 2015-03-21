@@ -1,9 +1,14 @@
 #!/usr/bin/env ruby
 
-puts "list of available commands:"
+require_relative "lib/colors"
+
+puts C("list of available commands:", :bold)
 puts
 
 Dir[File.join(ENV["HOME"], "git-shell-commands", "*")].each do |file|
-  puts File.basename(file) if File.executable?(file)
+  next if File.directory?(file)
+  next unless File.executable?(file)
+
+  puts C(File.basename(file), :green, :bold)
 end
 
