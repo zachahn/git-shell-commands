@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+require_relative "lib/pig"
+require "fileutils"
+
+command, *repos = ARGV
+
+if command.nil? || repos.empty? || !%w[show hide].include?(command)
+  puts "usage: export show/hide <name>"
+  puts
+  puts "adds/removes git-daemon-export-ok on repository"
+  exit
+end
+
+repos.each do |repo|
+  repo_name = File.basename(repo, ".git")
+  repo_path = File.join(ENV["HOME"], "#{repo_name}.git")
+
+  if !File.exist?(repo_path)
+    puts "#{repo_name}.git doesn't exist"
+    next
+  end
+
+  export_file_path = File.join(repo_path, "git-daemon-export-ok")
+
+  if command == "show"
+    if !File.exist?(export_file_path)
+      FileUtils.touch(export_file_path)
+    end
+
+    puts "#{repo_name}.git #{Pig.new("exported").green}"
+  elsif command == "hide"
+    if File.exist?(export_file_path)
+      File.delete(export_file_path)
+    end
+
+    puts "#{repo_name}.git #{Pig.new("hidden").yellow}"
+  end
+end
