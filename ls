@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-require_relative "lib/colors"
+require_relative "lib/pig"
 
 Dir[File.join(ENV["HOME"], "*.git")].each do |file|
-  puts C(File.basename(file), :blue, :bold)
+  puts Pig.new(File.basename(file)).blue.bold
 end
-

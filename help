@@ -1,14 +1,13 @@
 #!/usr/bin/env ruby
 
-require_relative "lib/colors"
+require_relative "lib/pig"
 
-puts C("list of available commands:", :bold)
+puts Pig.new("list of available commands:").bold
 puts
 
 Dir[File.join(ENV["HOME"], "git-shell-commands", "*")].each do |file|
   next if File.directory?(file)
   next unless File.executable?(file)
 
-  puts C(File.basename(file), :green, :bold)
+  puts Pig.new(File.basename(file)).green.bold
 end
-
